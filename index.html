@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sumikko Gurashi Pixel Pet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Pet App Container -->
+  <div id="pet-app" class="pet-app">
+    <!-- Character & Attached Bubble Wrapper -->
+    <div id="pet-wrapper" class="pet-wrapper">
+      <!-- Dialogue Bubble directly above character -->
+      <div id="dialogue-bubble" class="bubble bubble-hidden">
+        <span id="bubble-text">Safe in the corner...</span>
+        <div class="bubble-tail"></div>
+      </div>
+
+      <!-- Main Character Display -->
+      <div id="character-container" class="character-container idle size-tiny">
+        <div id="svg-wrapper"></div>
+      </div>
+    </div>
+
+    <!-- Particle Canvas Layer -->
+    <canvas id="particle-canvas"></canvas>
+  </div>
+
+  <!-- Custom Right-Click Context Menu -->
+  <div id="context-menu" class="context-menu menu-hidden">
+    <div class="menu-header">
+      <span class="menu-title">Sumikko Gurashi</span>
+      <span class="menu-subtitle">Right-click options</span>
+    </div>
+    <div class="menu-divider"></div>
+    
+    <div class="menu-item" id="btn-select-char">
+      <span class="icon">🐾</span>
+      <span>Switch Character...</span>
+      <span class="arrow">›</span>
+    </div>
+
+    <div class="menu-item" id="btn-trigger-action">
+      <span class="icon">✨</span>
+      <span>Trigger Action</span>
+    </div>
+
+    <div class="menu-item" id="btn-toggle-size">
+      <span class="icon">🔍</span>
+      <span id="text-pet-size">Size: Tiny (1/4th)</span>
+    </div>
+
+    <div class="menu-item" id="btn-corner-mode">
+      <span class="icon">📐</span>
+      <span id="text-corner-mode">Stick to Corner</span>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <div class="menu-item" id="btn-sound-toggle">
+      <span class="icon" id="icon-sound">🔊</span>
+      <span id="text-sound">Sound: ON</span>
+    </div>
+
+    <div class="menu-item" id="btn-hide-pet">
+      <span class="icon">🙈</span>
+      <span>Hide Pet (Cmd+Shift+P)</span>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <div class="menu-item danger" id="btn-quit-pet">
+      <span class="icon">🚪</span>
+      <span>Quit Pet</span>
+    </div>
+  </div>
+
+  <!-- Character Selector Modal -->
+  <div id="selector-modal" class="modal modal-hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Choose Your Sumikko Pet</h3>
+        <button id="modal-close-btn" class="close-btn">&times;</button>
+      </div>
+      <div id="character-grid" class="character-grid">
+        <!-- Dynamically Populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/characters.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

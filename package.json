@@ -1,0 +1,21 @@
+{
+  "name": "sumikko-desktop-pet",
+  "version": "1.0.0",
+  "description": "Sumikko Gurashi Compact Pixel-Art Desktop Pet",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "sumikko",
+    "desktop-pet",
+    "pixel-art",
+    "electron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
