@@ -1,6 +1,6 @@
 # 🐱‍❄️ Sumikko Gurashi Compact Pixel Desktop Pet
 
-An authentic **Sumikko Gurashi Pixel-Art Desktop Pet** application built with Electron. Recreates all 12 San-X official Sumikko characters with retro GBA pixel-art aesthetics, full English language UI, transparent overlay window, right-click character switching, interactive mouse animations, custom retro sound effects, hide/show shortcuts, and one-click exit & remove capabilities.
+An authentic **Sumikko Gurashi Pixel-Art Desktop Pet** application built with Electron. Recreates all 12 San-X official Sumikko characters with retro GBA pixel-art aesthetics, transparent overlay window, right-click character switching, interactive mouse animations, custom retro sound effects, hide/show shortcuts, and one-click exit & remove capabilities.
 
 ---
 
