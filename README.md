@@ -36,7 +36,9 @@ An authentic **Sumikko Gurashi Pixel-Art Desktop Pet** application built with El
 
 ## 🚀 How to Run
 
+Requires Node.js `22.12.0` or newer. Electron is pinned to `43.2.0` so a fresh install downloads the current compatible runtime instead of the older v31 binary.
+
 ```bash
-cd /Users/wd/sumikko-desktop-pet
+npm install
 npm start
 ```
