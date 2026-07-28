@@ -37,6 +37,6 @@ An authentic **Sumikko Gurashi Pixel-Art Desktop Pet** application built with El
 ## 🚀 How to Run
 
 ```bash
-cd /Users/wd/sumikko-desktop-pet
+/Users/iana/sumikko-desktop-pet
 npm start
 ```
