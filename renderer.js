@@ -38,7 +38,9 @@ class SumikkoPet {
     this.particles = [];
     
     // Audio Context
-    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    this.audioCtx = null;
+    this.particleFrameId = null;
+    this.particleLoopRunning = false;
 
     this.init();
   }
@@ -50,7 +52,6 @@ class SumikkoPet {
     this.setupEventListeners();
     this.populateModalGrid();
     this.startIdleTimer();
-    this.startParticleLoop();
     this.setupMouseEventsForwarding();
     this.updateClickCountLabel();
   }
@@ -140,8 +141,11 @@ class SumikkoPet {
 
   // --- Sound Effects Synthesizer ---
   playSound(type = 'pop') {
-    if (!this.soundEnabled || !this.audioCtx) return;
+    if (!this.soundEnabled) return;
     try {
+      if (!this.audioCtx) {
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
       if (this.audioCtx.state === 'suspended') {
         this.audioCtx.resume();
       }
@@ -207,9 +211,13 @@ class SumikkoPet {
         life: 0.03 + Math.random() * 0.02
       });
     }
+    this.startParticleLoop();
   }
 
   startParticleLoop() {
+    if (this.particleLoopRunning) return;
+    this.particleLoopRunning = true;
+
     const render = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -230,7 +238,12 @@ class SumikkoPet {
         this.ctx.fillRect(p.x, p.y, p.size, p.size);
         this.ctx.restore();
       }
-      requestAnimationFrame(render);
+      if (this.particles.length > 0) {
+        this.particleFrameId = requestAnimationFrame(render);
+      } else {
+        this.particleFrameId = null;
+        this.particleLoopRunning = false;
+      }
     };
     render();
   }
