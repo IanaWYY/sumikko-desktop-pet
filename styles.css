@@ -68,6 +68,18 @@ body, html {
   transform: scale(1.08) translateY(-2px);
 }
 
+.character-container.hover.hover-hop {
+  animation: hover-hop 0.75s ease-in-out infinite;
+}
+
+.character-container.hover.hover-roll {
+  animation: hover-roll 1.1s ease-in-out infinite;
+}
+
+.character-container.hover.hover-expression {
+  animation: hover-expression 0.9s ease-in-out infinite;
+}
+
 .character-container.drag {
   animation: jitter 0.12s ease-in-out infinite alternate;
   transform: scale(0.95);
@@ -208,6 +220,34 @@ body, html {
   cursor: pointer;
   transition: background 0.15s ease;
   font-weight: 600;
+}
+
+.menu-item-control {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.menu-item-control label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.menu-item-control input[type="range"] {
+  flex-basis: 100%;
+  width: 100%;
+  height: 6px;
+  accent-color: #8D7F73;
+  cursor: pointer;
+}
+
+.menu-item-static {
+  cursor: default;
+  color: #8D7F73;
+}
+
+.menu-item-static:hover {
+  background: transparent;
+  color: #8D7F73;
 }
 
 .menu-item:hover {
@@ -367,4 +407,21 @@ body, html {
   40% { transform: scale(1.12) translateY(-4px); }
   70% { transform: scale(0.96) translateY(1px); }
   100% { transform: scale(1) translateY(0); }
+}
+
+@keyframes hover-hop {
+  0%, 100% { transform: translateY(0) scale(1.04); }
+  50% { transform: translateY(-7px) scale(1.1); }
+}
+
+@keyframes hover-roll {
+  0%, 100% { transform: translateX(0) rotate(0deg) scale(1.05); }
+  35% { transform: translateX(-5px) rotate(-7deg) scale(1.08); }
+  70% { transform: translateX(5px) rotate(7deg) scale(1.08); }
+}
+
+@keyframes hover-expression {
+  0%, 100% { transform: scale(1.05) rotate(0deg); }
+  30% { transform: scale(1.1) rotate(-3deg); }
+  60% { transform: scale(1.06) rotate(3deg); }
 }

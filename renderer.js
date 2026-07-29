@@ -8,6 +8,8 @@ class SumikkoPet {
     this.state = 'idle'; // idle | hover | click | drag
     this.soundEnabled = true;
     this.isTinySize = true; // true = 1/4th (68px), false = Normal (96px)
+    this.opacity = Number(localStorage.getItem('sumikko-opacity') || 1);
+    this.clickCounts = JSON.parse(localStorage.getItem('sumikko-click-counts') || '{}');
 
     // Drag tracking
     this.isDragging = false;
@@ -17,6 +19,7 @@ class SumikkoPet {
 
     // DOM Elements
     this.container = document.getElementById('character-container');
+    this.petApp = document.getElementById('pet-app');
     this.svgWrapper = document.getElementById('svg-wrapper');
     this.bubble = document.getElementById('dialogue-bubble');
     this.bubbleText = document.getElementById('bubble-text');
@@ -37,12 +40,14 @@ class SumikkoPet {
 
   init() {
     this.setupCanvas();
+    this.applyOpacity();
     this.renderCharacter();
     this.setupEventListeners();
     this.populateModalGrid();
     this.startIdleTimer();
     this.startParticleLoop();
     this.setupMouseEventsForwarding();
+    this.updateClickCountLabel();
   }
 
   setupCanvas() {
@@ -72,8 +77,33 @@ class SumikkoPet {
     if (!charDef) return;
 
     const sizeClass = this.isTinySize ? 'size-tiny' : 'size-normal';
-    this.container.className = `character-container ${actionState} ${sizeClass}`;
+    const hoverMotion = this.getHoverMotionClass();
+    this.container.className = `character-container ${actionState} ${sizeClass} ${hoverMotion}`;
     this.svgWrapper.innerHTML = charDef.svg(actionState);
+  }
+
+  getHoverMotionClass() {
+    const motionMap = {
+      shirokuma: 'hover-hop', penguin: 'hover-expression', tonkatsu: 'hover-roll',
+      neko: 'hover-expression', tokage: 'hover-hop', ebifurai: 'hover-hop',
+      tapioca: 'hover-roll', nisetsumuri: 'hover-roll', zassou: 'hover-hop',
+      hokori: 'hover-expression', obake: 'hover-roll', yama: 'hover-hop'
+    };
+    return motionMap[this.currentCharacterKey] || 'hover-hop';
+  }
+
+  applyOpacity() {
+    this.petApp.style.opacity = this.opacity;
+    const slider = document.getElementById('opacity-slider');
+    const label = document.getElementById('text-opacity');
+    if (slider) slider.value = Math.round(this.opacity * 100);
+    if (label) label.innerText = `${Math.round(this.opacity * 100)}%`;
+  }
+
+  updateClickCountLabel() {
+    const count = this.clickCounts[this.currentCharacterKey] || 0;
+    const label = document.getElementById('text-click-count');
+    if (label) label.innerText = `Clicks: ${count}`;
   }
 
   showDialogue(text, duration = 3000) {
@@ -276,6 +306,12 @@ class SumikkoPet {
       this.hideContextMenu();
     });
 
+    document.getElementById('opacity-slider').addEventListener('input', (event) => {
+      this.opacity = Number(event.target.value) / 100;
+      localStorage.setItem('sumikko-opacity', String(this.opacity));
+      this.applyOpacity();
+    });
+
     document.getElementById('btn-sound-toggle').addEventListener('click', () => {
       this.soundEnabled = !this.soundEnabled;
       document.getElementById('text-sound').innerText = `Sound: ${this.soundEnabled ? 'ON' : 'OFF'}`;
@@ -300,6 +336,9 @@ class SumikkoPet {
   }
 
   triggerAction() {
+    this.clickCounts[this.currentCharacterKey] = (this.clickCounts[this.currentCharacterKey] || 0) + 1;
+    localStorage.setItem('sumikko-click-counts', JSON.stringify(this.clickCounts));
+    this.updateClickCountLabel();
     this.state = 'click';
     this.renderCharacter('click');
 
@@ -378,6 +417,7 @@ class SumikkoPet {
     this.currentCharacterKey = key;
     this.renderCharacter('idle');
     this.populateModalGrid();
+    this.updateClickCountLabel();
     
     const char = window.SumikkoCharacters[key];
     this.showDialogue(`Hello! I'm ${char.name}~`, 3000);
