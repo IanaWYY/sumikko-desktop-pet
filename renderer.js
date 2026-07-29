@@ -291,15 +291,17 @@ class SumikkoPet {
     });
 
     // Hover states
-    this.container.addEventListener('mouseenter', () => {
+    const startHover = () => {
       if (!this.isDragging) {
-        this.container.classList.add('hover');
+        this.container.classList.add('hover', 'hover-active');
       }
-    });
+    };
 
-    this.container.addEventListener('mouseleave', () => {
-      this.container.classList.remove('hover');
-    });
+    const endHover = () => this.container.classList.remove('hover', 'hover-active');
+    this.container.addEventListener('pointerenter', startHover);
+    this.container.addEventListener('pointerleave', endHover);
+    this.container.addEventListener('mouseenter', startHover);
+    this.container.addEventListener('mouseleave', endHover);
 
     // Right-Click Context Menu
     window.addEventListener('contextmenu', (e) => {
