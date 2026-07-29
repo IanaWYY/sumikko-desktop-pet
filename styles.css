@@ -36,6 +36,54 @@ body, html {
   align-items: center;
 }
 
+.opacity-editor {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  padding: 7px 10px 6px;
+  background: rgba(255, 253, 249, 0.98);
+  border: 2px solid #796E65;
+  border-radius: 10px;
+  box-shadow: 0 5px 14px rgba(90, 75, 65, 0.3);
+  z-index: 110;
+  text-align: center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.opacity-editor.opacity-editor-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-5px) scale(0.95);
+}
+
+.opacity-editor-label {
+  display: block;
+  color: #52473E;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.opacity-editor-slider {
+  width: 100%;
+}
+
+#opacity-editor-slider {
+  width: 100%;
+  height: 7px;
+  accent-color: #8D7F73;
+  cursor: pointer;
+}
+
+.opacity-editor-hint {
+  display: block;
+  margin-top: 3px;
+  color: #9C8E80;
+  font-size: 8px;
+}
+
 /* Character Container */
 .character-container {
   position: relative;
@@ -220,24 +268,6 @@ body, html {
   cursor: pointer;
   transition: background 0.15s ease;
   font-weight: 600;
-}
-
-.menu-item-control {
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.menu-item-control label {
-  flex: 1;
-  cursor: pointer;
-}
-
-.menu-item-control input[type="range"] {
-  flex-basis: 100%;
-  width: 100%;
-  height: 6px;
-  accent-color: #8D7F73;
-  cursor: pointer;
 }
 
 .menu-item-static {

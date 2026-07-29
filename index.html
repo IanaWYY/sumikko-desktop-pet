@@ -20,6 +20,12 @@
       <div id="character-container" class="character-container idle size-tiny">
         <div id="svg-wrapper"></div>
       </div>
+
+      <div id="opacity-editor" class="opacity-editor opacity-editor-hidden">
+        <span class="opacity-editor-label">Change Opacity: <strong id="opacity-editor-value">100%</strong></span>
+        <input id="opacity-editor-slider" type="range" min="35" max="100" value="100" step="5">
+        <span class="opacity-editor-hint">Stops automatically after 3 seconds</span>
+      </div>
     </div>
 
     <!-- Particle Canvas Layer -->
@@ -44,10 +50,10 @@
       <span id="text-pet-size">Size: Tiny (1/4th)</span>
     </div>
 
-    <div class="menu-item menu-item-control" id="btn-opacity">
+    <div class="menu-item" id="btn-opacity">
       <span class="icon">◐</span>
-      <label for="opacity-slider">Opacity: <span id="text-opacity">100%</span></label>
-      <input id="opacity-slider" type="range" min="35" max="100" value="100" step="5">
+      <span>Change Opacity</span>
+      <span class="arrow">›</span>
     </div>
 
     <div class="menu-item menu-item-static">

@@ -10,6 +10,8 @@ class SumikkoPet {
     this.isTinySize = true; // true = 1/4th (68px), false = Normal (96px)
     this.opacity = Number(localStorage.getItem('sumikko-opacity') || 1);
     this.clickCounts = JSON.parse(localStorage.getItem('sumikko-click-counts') || '{}');
+    this.opacityEditing = false;
+    this.opacityConfirmTimer = null;
 
     // Drag tracking
     this.isDragging = false;
@@ -24,6 +26,9 @@ class SumikkoPet {
     this.bubble = document.getElementById('dialogue-bubble');
     this.bubbleText = document.getElementById('bubble-text');
     this.contextMenu = document.getElementById('context-menu');
+    this.opacityEditor = document.getElementById('opacity-editor');
+    this.opacityEditorSlider = document.getElementById('opacity-editor-slider');
+    this.opacityEditorValue = document.getElementById('opacity-editor-value');
     this.selectorModal = document.getElementById('selector-modal');
     this.characterGrid = document.getElementById('character-grid');
     this.canvas = document.getElementById('particle-canvas');
@@ -93,11 +98,27 @@ class SumikkoPet {
   }
 
   applyOpacity() {
-    this.petApp.style.opacity = this.opacity;
-    const slider = document.getElementById('opacity-slider');
-    const label = document.getElementById('text-opacity');
-    if (slider) slider.value = Math.round(this.opacity * 100);
-    if (label) label.innerText = `${Math.round(this.opacity * 100)}%`;
+    this.container.style.opacity = this.opacity;
+    this.bubble.style.opacity = this.opacity;
+    if (this.opacityEditorSlider) this.opacityEditorSlider.value = Math.round(this.opacity * 100);
+    if (this.opacityEditorValue) this.opacityEditorValue.innerText = `${Math.round(this.opacity * 100)}%`;
+  }
+
+  showOpacityEditor() {
+    this.hideContextMenu();
+    this.opacityEditing = true;
+    this.opacityEditor.classList.remove('opacity-editor-hidden');
+    this.applyOpacity();
+    this.resetOpacityConfirmTimer();
+  }
+
+  resetOpacityConfirmTimer() {
+    if (this.opacityConfirmTimer) clearTimeout(this.opacityConfirmTimer);
+    this.opacityConfirmTimer = setTimeout(() => {
+      this.opacityEditing = false;
+      this.opacityEditor.classList.add('opacity-editor-hidden');
+      this.opacityConfirmTimer = null;
+    }, 3000);
   }
 
   updateClickCountLabel() {
@@ -306,10 +327,15 @@ class SumikkoPet {
       this.hideContextMenu();
     });
 
-    document.getElementById('opacity-slider').addEventListener('input', (event) => {
+    document.getElementById('btn-opacity').addEventListener('click', () => {
+      this.showOpacityEditor();
+    });
+
+    this.opacityEditorSlider.addEventListener('input', (event) => {
       this.opacity = Number(event.target.value) / 100;
       localStorage.setItem('sumikko-opacity', String(this.opacity));
       this.applyOpacity();
+      this.resetOpacityConfirmTimer();
     });
 
     document.getElementById('btn-sound-toggle').addEventListener('click', () => {
