@@ -5,8 +5,7 @@
 class SumikkoPet {
   constructor() {
     this.currentCharacterKey = 'shirokuma';
-    this.state = 'idle'; // idle | hover | click | drag | corner
-    this.isCornerMode = false;
+    this.state = 'idle'; // idle | hover | click | drag
     this.soundEnabled = true;
     this.isTinySize = true; // true = 1/4th (68px), false = Normal (96px)
 
@@ -269,22 +268,12 @@ class SumikkoPet {
       this.showModal();
     });
 
-    document.getElementById('btn-trigger-action').addEventListener('click', () => {
-      this.hideContextMenu();
-      this.triggerAction();
-    });
-
     document.getElementById('btn-toggle-size').addEventListener('click', () => {
       this.isTinySize = !this.isTinySize;
       document.getElementById('text-pet-size').innerText = `Size: ${this.isTinySize ? 'Tiny (1/4th)' : 'Normal'}`;
       this.renderCharacter();
       this.showDialogue(`Switched size to ${this.isTinySize ? 'Tiny' : 'Normal'}!`, 3000);
       this.hideContextMenu();
-    });
-
-    document.getElementById('btn-corner-mode').addEventListener('click', () => {
-      this.hideContextMenu();
-      this.toggleCornerMode();
     });
 
     document.getElementById('btn-sound-toggle').addEventListener('click', () => {
@@ -343,16 +332,6 @@ class SumikkoPet {
     const charDef = window.SumikkoCharacters[this.currentCharacterKey];
     if (charDef.dialogues.corner && Math.random() > 0.4) {
       this.showDialogue(charDef.dialogues.corner[0], 3000);
-    }
-  }
-
-  toggleCornerMode() {
-    this.isCornerMode = !this.isCornerMode;
-    const btnText = document.getElementById('text-corner-mode');
-    btnText.innerText = this.isCornerMode ? 'Unstick Corner' : 'Stick to Corner';
-
-    if (this.isCornerMode) {
-      this.showDialogue('Stuck to the corner tight!', 3000);
     }
   }
 

@@ -158,21 +158,24 @@ body, html {
 
 /* Custom scrollbar for context menu */
 .context-menu::-webkit-scrollbar {
-  width: 4px;
+  width: 10px;
 }
 
 .context-menu::-webkit-scrollbar-track {
-  background: #F5EFE6;
-  border-radius: 4px;
+  background: #E3D8CB;
+  border-radius: 6px;
+  border: 2px solid #FFFDF9;
 }
 
 .context-menu::-webkit-scrollbar-thumb {
-  background: #C4B5A5;
-  border-radius: 4px;
+  background: #8D7F73;
+  border-radius: 6px;
+  border: 2px solid #E3D8CB;
+  min-height: 32px;
 }
 
 .context-menu::-webkit-scrollbar-thumb:hover {
-  background: #9E8C7A;
+  background: #5F554D;
 }
 
 .menu-hidden {
@@ -190,13 +193,6 @@ body, html {
   font-weight: 700;
   font-size: 12px;
   color: #3B3128;
-}
-
-.menu-subtitle {
-  display: block;
-  font-size: 9px;
-  color: #9C8E80;
-  margin-top: 1px;
 }
 
 .menu-divider {
