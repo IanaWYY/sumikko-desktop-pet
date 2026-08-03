@@ -1,7 +1,7 @@
 {
-  "name": "sumikko-desktop-pet",
+  "name": "pixel-desktop-pet",
   "version": "1.0.0",
-  "description": "Sumikko Gurashi Compact Pixel-Art Desktop Pet",
+  "description": "Compact Pixel-Art Desktop Pet with Sumikko Gurashi and Stardew Valley characters",
   "main": "main.js",
   "scripts": {
     "start": "electron ."

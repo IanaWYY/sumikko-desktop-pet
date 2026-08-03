@@ -521,5 +521,77 @@ window.SumikkoCharacters = {
         <rect x="18" y="19" width="2" height="2" fill="#0D47A1"/>
       </svg>
     `
+  },
+
+  // 13. Chicken (Stardew Valley)
+  chicken: {
+    id: 'chicken',
+    category: 'Stardew Valley',
+    name: 'Chicken',
+    desc: 'A cheerful little farm chicken who loves fresh grass and cozy coops.',
+    color: '#FFF3C4',
+    bgTheme: '#fff8e1',
+    dialogues: {
+      idle: ['Cluck cluck!', 'The coop is cozy today~', 'Looking for fresh grass.'],
+      click: ['A fresh egg for you! 🥚', 'Happy chicken noises!'],
+      drag: ['Careful with my feathers!', 'Flap flap! Back to the farm!'],
+      corner: ['A quiet corner makes a cozy coop.']
+    },
+    svg: (state = 'idle') => `
+      <svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+        <rect x="7" y="28" width="18" height="2" fill="#D7CCC8"/>
+        <rect x="8" y="11" width="16" height="17" fill="#FFF8E1"/>
+        <rect x="6" y="16" width="20" height="10" fill="#FFF8E1"/>
+        <rect x="10" y="8" width="12" height="10" fill="#FFF8E1"/>
+        <rect x="9" y="7" width="10" height="1" fill="#5D4037"/>
+        <rect x="7" y="9" width="2" height="3" fill="#5D4037"/>
+        <rect x="21" y="9" width="2" height="3" fill="#5D4037"/>
+        <rect x="5" y="16" width="1" height="10" fill="#5D4037"/>
+        <rect x="26" y="16" width="1" height="10" fill="#5D4037"/>
+        <rect x="11" y="13" width="2" height="2" fill="#3E2723"/>
+        <rect x="19" y="13" width="2" height="2" fill="#3E2723"/>
+        <rect x="15" y="15" width="4" height="2" fill="#F57C00"/>
+        <rect x="14" y="7" width="4" height="2" fill="#E53935"/>
+        <rect x="15" y="5" width="2" height="2" fill="#E53935"/>
+        ${state === 'click' ? `<rect x="12" y="20" width="8" height="6" fill="#FFFFFF"/><rect x="12" y="20" width="8" height="1" fill="#5D4037"/><rect x="15" y="21" width="2" height="2" fill="#F48FB1"/>` : ``}
+        <rect x="10" y="28" width="3" height="1" fill="#F57C00"/>
+        <rect x="19" y="28" width="3" height="1" fill="#F57C00"/>
+      </svg>
+    `
+  },
+
+  // 14. Junimo (Stardew Valley)
+  junimo: {
+    id: 'junimo',
+    category: 'Stardew Valley',
+    name: 'Junimo',
+    desc: 'A tiny forest spirit with a bright green apple and a happy little dance.',
+    color: '#9CCC65',
+    bgTheme: '#f1f8e9',
+    dialogues: {
+      idle: ['Junimo junimo!', 'The forest is humming~', 'A little apple, a big smile.'],
+      click: ['Apple delivery! 🍏', 'Dance dance dance!'],
+      drag: ['Wheee! Spirit zoom!', 'Hold on to my little leaf!'],
+      corner: ['A magical corner for a tiny spirit.']
+    },
+    svg: (state = 'idle') => `
+      <svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+        <rect x="7" y="28" width="18" height="2" fill="#C5E1A5"/>
+        <rect x="9" y="11" width="14" height="17" fill="#8BC34A"/>
+        <rect x="7" y="15" width="18" height="10" fill="#8BC34A"/>
+        <rect x="11" y="9" width="10" height="4" fill="#8BC34A"/>
+        <rect x="10" y="8" width="12" height="1" fill="#33691E"/>
+        <rect x="6" y="15" width="1" height="10" fill="#33691E"/>
+        <rect x="25" y="15" width="1" height="10" fill="#33691E"/>
+        <rect x="11" y="16" width="2" height="2" fill="#263238"/>
+        <rect x="19" y="16" width="2" height="2" fill="#263238"/>
+        <rect x="15" y="19" width="2" height="1" fill="#E91E63"/>
+        <rect x="14" y="6" width="5" height="3" fill="#7CB342"/>
+        <rect x="18" y="4" width="5" height="3" fill="#43A047"/>
+        ${state === 'click' ? `<rect x="13" y="21" width="6" height="5" fill="#9CCC65"/><rect x="14" y="20" width="4" height="1" fill="#7CB342"/>` : ``}
+        <rect x="10" y="28" width="3" height="1" fill="#558B2F"/>
+        <rect x="19" y="28" width="3" height="1" fill="#558B2F"/>
+      </svg>
+    `
   }
 };

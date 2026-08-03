@@ -386,6 +386,24 @@ body, html {
   padding-right: 2px;
 }
 
+.character-category {
+  grid-column: 1 / -1;
+}
+
+.character-category-title {
+  margin: 8px 0 6px;
+  color: #5d4037;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.character-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
 .character-grid::-webkit-scrollbar {
   width: 3px;
 }

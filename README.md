@@ -1,10 +1,12 @@
-# 🐱‍❄️ Sumikko Gurashi Compact Pixel Desktop Pet
+# 🐱‍❄️ Pixel Desktop Pet
 
-An authentic **Sumikko Gurashi Pixel-Art Desktop Pet** application built with Electron. Recreates all 12 San-X official Sumikko characters with retro GBA pixel-art aesthetics, transparent overlay window, right-click character switching, interactive mouse animations, custom retro sound effects, hide/show shortcuts, and one-click exit & remove capabilities.
+An authentic **Pixel-Art Desktop Pet** application built with Electron. Includes 12 San-X official Sumikko characters plus Chicken and Junimo from Stardew Valley, with retro GBA pixel-art aesthetics, transparent overlay window, categorized character switching, interactive mouse animations, custom retro sound effects, hide/show shortcuts, and one-click exit & remove capabilities.
 
 ---
 
-## 🌟 12 Official Sumikko Characters (Crisp 1:1 Pixel Art)
+## 🌟 Character Collections (Crisp 1:1 Pixel Art)
+
+The character selector groups pets into **Sumikko Gurashi** and **Stardew Valley** collections. Stardew Valley currently includes **Chicken** and **Junimo**.
 
 | Icon | Character Name | Official Background | Pixel Interactive Actions |
 | :---: | :--- | :--- | :--- |

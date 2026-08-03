@@ -93,7 +93,8 @@ class SumikkoPet {
       shirokuma: 'hover-hop', penguin: 'hover-expression', tonkatsu: 'hover-roll',
       neko: 'hover-expression', tokage: 'hover-hop', ebifurai: 'hover-hop',
       tapioca: 'hover-roll', nisetsumuri: 'hover-roll', zassou: 'hover-hop',
-      hokori: 'hover-expression', obake: 'hover-roll', yama: 'hover-hop'
+      hokori: 'hover-expression', obake: 'hover-roll', yama: 'hover-hop',
+      chicken: 'hover-hop', junimo: 'hover-expression'
     };
     return motionMap[this.currentCharacterKey] || 'hover-hop';
   }
@@ -437,19 +438,29 @@ class SumikkoPet {
 
   populateModalGrid() {
     this.characterGrid.innerHTML = '';
+    const groups = {};
     Object.keys(window.SumikkoCharacters).forEach((key) => {
       const char = window.SumikkoCharacters[key];
-      const card = document.createElement('div');
-      card.className = `grid-card ${key === this.currentCharacterKey ? 'active' : ''}`;
-      card.innerHTML = `
-        <div class="grid-card-svg">${char.svg('idle')}</div>
-        <span class="grid-card-name">${char.name.split(' ')[0]}</span>
-      `;
-      card.addEventListener('click', () => {
-        this.switchCharacter(key);
-        this.hideModal();
+      const category = char.category || 'Sumikko Gurashi';
+      if (!groups[category]) groups[category] = [];
+      groups[category].push({ key, char });
+    });
+    Object.keys(groups).forEach((category) => {
+      const section = document.createElement('section');
+      section.className = 'character-category';
+      section.innerHTML = `<h4 class="character-category-title">${category}</h4><div class="character-category-grid"></div>`;
+      const grid = section.querySelector('.character-category-grid');
+      groups[category].forEach(({ key, char }) => {
+        const card = document.createElement('div');
+        card.className = `grid-card ${key === this.currentCharacterKey ? 'active' : ''}`;
+        card.innerHTML = `<div class="grid-card-svg">${char.svg('idle')}</div><span class="grid-card-name">${char.name.split(' ')[0]}</span>`;
+        card.addEventListener('click', () => {
+          this.switchCharacter(key);
+          this.hideModal();
+        });
+        grid.appendChild(card);
       });
-      this.characterGrid.appendChild(card);
+      this.characterGrid.appendChild(section);
     });
   }
 
