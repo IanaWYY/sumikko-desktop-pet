@@ -207,7 +207,7 @@ window.SumikkoCharacters = {
     id: 'neko',
     name: 'Neko (Cat)',
     desc: 'Shy and gentle cat. Self-conscious about her shape, loves wall scratching.',
-    color: '#FFF3C4',
+    color: '#C77B30',
     bgTheme: '#fffde7',
     dialogues: {
       idle: ['Scratching in the corner feels great...', 'Did I gain weight again?', 'Craving fish snacks~'],
@@ -523,44 +523,7 @@ window.SumikkoCharacters = {
     `
   },
 
-  // 13. Chicken (Stardew Valley)
-  chicken: {
-    id: 'chicken',
-    category: 'Stardew Valley',
-    name: 'Chicken',
-    desc: 'A cheerful little farm chicken who loves fresh grass and cozy coops.',
-    color: '#FFF3C4',
-    bgTheme: '#fff8e1',
-    dialogues: {
-      idle: ['Cluck cluck!', 'The coop is cozy today~', 'Looking for fresh grass.'],
-      click: ['A fresh egg for you! 🥚', 'Happy chicken noises!'],
-      drag: ['Careful with my feathers!', 'Flap flap! Back to the farm!'],
-      corner: ['A quiet corner makes a cozy coop.']
-    },
-    svg: (state = 'idle') => `
-      <svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
-        <rect x="7" y="28" width="18" height="2" fill="#D7CCC8"/>
-        <rect x="8" y="11" width="16" height="17" fill="#FFF8E1"/>
-        <rect x="6" y="16" width="20" height="10" fill="#FFF8E1"/>
-        <rect x="10" y="8" width="12" height="10" fill="#FFF8E1"/>
-        <rect x="9" y="7" width="10" height="1" fill="#5D4037"/>
-        <rect x="7" y="9" width="2" height="3" fill="#5D4037"/>
-        <rect x="21" y="9" width="2" height="3" fill="#5D4037"/>
-        <rect x="5" y="16" width="1" height="10" fill="#5D4037"/>
-        <rect x="26" y="16" width="1" height="10" fill="#5D4037"/>
-        <rect x="11" y="13" width="2" height="2" fill="#3E2723"/>
-        <rect x="19" y="13" width="2" height="2" fill="#3E2723"/>
-        <rect x="15" y="15" width="4" height="2" fill="#F57C00"/>
-        <rect x="14" y="7" width="4" height="2" fill="#E53935"/>
-        <rect x="15" y="5" width="2" height="2" fill="#E53935"/>
-        ${state === 'click' ? `<rect x="12" y="20" width="8" height="6" fill="#FFFFFF"/><rect x="12" y="20" width="8" height="1" fill="#5D4037"/><rect x="15" y="21" width="2" height="2" fill="#F48FB1"/>` : ``}
-        <rect x="10" y="28" width="3" height="1" fill="#F57C00"/>
-        <rect x="19" y="28" width="3" height="1" fill="#F57C00"/>
-      </svg>
-    `
-  },
-
-  // 14. Junimo (Stardew Valley)
+  // Stardew Valley characters
   junimo: {
     id: 'junimo',
     category: 'Stardew Valley',
@@ -574,24 +537,150 @@ window.SumikkoCharacters = {
       drag: ['Wheee! Spirit zoom!', 'Hold on to my little leaf!'],
       corner: ['A magical corner for a tiny spirit.']
     },
+    variant: 0,
     svg: (state = 'idle') => `
+      ${(() => { const colors = ['#8FBE4F', '#35B8C5', '#E85D5A', '#4D9D45']; const body = colors[window.SumikkoCharacters.junimo.variant || 0]; return `<style>:root{--junimo-body:${body}</style>`; })()}
       <svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
-        <rect x="7" y="28" width="18" height="2" fill="#C5E1A5"/>
-        <rect x="9" y="11" width="14" height="17" fill="#8BC34A"/>
-        <rect x="7" y="15" width="18" height="10" fill="#8BC34A"/>
-        <rect x="11" y="9" width="10" height="4" fill="#8BC34A"/>
-        <rect x="10" y="8" width="12" height="1" fill="#33691E"/>
-        <rect x="6" y="15" width="1" height="10" fill="#33691E"/>
-        <rect x="25" y="15" width="1" height="10" fill="#33691E"/>
-        <rect x="11" y="16" width="2" height="2" fill="#263238"/>
-        <rect x="19" y="16" width="2" height="2" fill="#263238"/>
-        <rect x="15" y="19" width="2" height="1" fill="#E91E63"/>
-        <rect x="14" y="6" width="5" height="3" fill="#7CB342"/>
-        <rect x="18" y="4" width="5" height="3" fill="#43A047"/>
-        ${state === 'click' ? `<rect x="13" y="21" width="6" height="5" fill="#9CCC65"/><rect x="14" y="20" width="4" height="1" fill="#7CB342"/>` : ``}
+        <rect x="14" y="3" width="3" height="3" fill="#111111"/><rect x="14" y="6" width="4" height="4" fill="#63B94B"/>
+        <rect x="10" y="7" width="12" height="3" fill="#111111"/><rect x="7" y="10" width="18" height="15" fill="#111111"/>
+        <rect x="5" y="13" width="22" height="10" fill="#111111"/><rect x="9" y="10" width="14" height="17" fill="var(--junimo-body)"/>
+        <rect x="7" y="14" width="18" height="9" fill="var(--junimo-body)"/><rect x="11" y="9" width="10" height="3" fill="var(--junimo-body)"/>
+        <rect x="11" y="12" width="10" height="3" fill="#B7D83F" opacity="0.9"/><rect x="12" y="16" width="2" height="3" fill="#111111"/>
+        <rect x="20" y="16" width="2" height="3" fill="#111111"/><rect x="8" y="18" width="3" height="4" fill="#F08A8A"/><rect x="21" y="18" width="3" height="4" fill="#F08A8A"/>
+        <rect x="4" y="16" width="3" height="3" fill="#111111"/><rect x="25" y="16" width="3" height="3" fill="#111111"/>
+        <rect x="9" y="25" width="14" height="3" fill="#111111"/><rect x="7" y="27" width="3" height="4" fill="#111111"/><rect x="23" y="27" width="3" height="4" fill="#111111"/>
+        ${state === 'click' ? `<rect x="13" y="21" width="6" height="5" fill="var(--junimo-body)"/><rect x="14" y="20" width="4" height="1" fill="#7CB342"/>` : ``}
         <rect x="10" y="28" width="3" height="1" fill="#558B2F"/>
         <rect x="19" y="28" width="3" height="1" fill="#558B2F"/>
       </svg>
     `
+  },
+
+  hoe: {
+    id: 'hoe', category: 'Stardew Valley', name: 'Hoe',
+    desc: 'A trusty farm tool for tilling soil and finding artifact spots.',
+    color: '#A87545', bgTheme: '#fff3e0',
+    dialogues: { idle: ['Ready to till the soil.', 'A good farm starts with good soil.'], click: ['Tilled soil! Ready for seeds. 🌱', 'Found a nice patch of earth!'], drag: ['Careful with the handle!'], hover: ['The soil is waiting...'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="15" y="7" width="3" height="22" fill="#8D5524"/><rect x="17" y="5" width="3" height="5" fill="#A66A32"/>
+      <rect x="7" y="5" width="14" height="3" fill="#B0BEC5"/><rect x="7" y="8" width="3" height="5" fill="#78909C"/>
+      <rect x="4" y="10" width="8" height="3" fill="#607D8B"/><rect x="18" y="10" width="3" height="3" fill="#607D8B"/>
+      ${state === 'click' ? '<rect x="5" y="25" width="8" height="2" fill="#795548"/><rect x="8" y="22" width="2" height="3" fill="#795548"/>' : ''}
+    </svg>`
+  },
+
+  axe: {
+    id: 'axe', category: 'Stardew Valley', name: 'Axe',
+    desc: 'A sturdy tool for chopping trees and clearing the farm.',
+    color: '#8D5524', bgTheme: '#fbe9d7',
+    dialogues: { idle: ['The trees are rustling.', 'Chop, chop, chop!'], click: ['Wood harvested! 🪵', 'That tree is one step closer to clearing.'], drag: ['Mind the sharp edge!'], hover: ['Ready for a mighty swing.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="14" y="8" width="4" height="21" fill="#8D5524"/><rect x="16" y="6" width="3" height="4" fill="#A66A32"/>
+      <rect x="8" y="5" width="12" height="3" fill="#90A4AE"/><rect x="7" y="8" width="5" height="8" fill="#607D8B"/>
+      <rect x="5" y="12" width="7" height="3" fill="#455A64"/>
+      ${state === 'click' ? '<rect x="21" y="22" width="7" height="2" fill="#6D4C41"/><rect x="24" y="19" width="2" height="3" fill="#6D4C41"/>' : ''}
+    </svg>`
+  },
+
+  wateringCan: {
+    id: 'wateringCan', category: 'Stardew Valley', name: 'Watering Can',
+    desc: 'A farm essential for watering crops every morning.',
+    color: '#78909C', bgTheme: '#e8f4f8',
+    dialogues: { idle: ['Time to water the crops.', 'Every seed needs a little care.'], click: ['Freshly watered! 💧', 'The crops are feeling happy.'], drag: ['Don’t spill the water!'], hover: ['A gentle sprinkle is ready.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="7" y="12" width="15" height="14" fill="#78909C"/><rect x="9" y="10" width="11" height="3" fill="#B0BEC5"/>
+      <rect x="5" y="14" width="3" height="9" fill="#546E7A"/><rect x="21" y="15" width="7" height="3" fill="#607D8B"/>
+      <rect x="26" y="12" width="3" height="4" fill="#90A4AE"/><rect x="12" y="8" width="6" height="3" fill="#546E7A"/>
+      ${state === 'click' ? '<rect x="26" y="8" width="2" height="2" fill="#4FC3F7"/><rect x="29" y="10" width="2" height="2" fill="#4FC3F7"/><rect x="27" y="6" width="2" height="2" fill="#4FC3F7"/>' : ''}
+    </svg>`
+  },
+
+  scythe: {
+    id: 'scythe', category: 'Stardew Valley', name: 'Scythe',
+    desc: 'A curved farm tool for cutting grass and harvesting hay.', color: '#90A4AE', bgTheme: '#edf3f5',
+    dialogues: { idle: ['The grass is getting tall.', 'A tidy farm feels good.'], click: ['Swish! Grass cleared for hay. 🌾'], drag: ['Keep the blade pointed away!'], hover: ['Ready for a clean sweep.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="14" y="8" width="3" height="21" fill="#8D5524"/><rect x="16" y="5" width="3" height="5" fill="#A66A32"/>
+      <rect x="7" y="5" width="11" height="3" fill="#B0BEC5"/><rect x="5" y="7" width="4" height="3" fill="#607D8B"/>
+      <rect x="4" y="9" width="3" height="7" fill="#455A64"/><rect x="7" y="14" width="4" height="3" fill="#90A4AE"/>
+      ${state === 'click' ? '<rect x="5" y="24" width="3" height="4" fill="#66BB6A"/><rect x="9" y="22" width="3" height="6" fill="#81C784"/>' : ''}
+    </svg>`
+  },
+
+  pickaxe: {
+    id: 'pickaxe', category: 'Stardew Valley', name: 'Pickaxe',
+    desc: 'A sturdy tool for breaking rocks and mining ore.', color: '#78909C', bgTheme: '#eef2f4',
+    dialogues: { idle: ['There might be ore nearby.', 'Rock and stone!'], click: ['Crack! A rock gives way. ⛏️'], drag: ['Heavy tool!'], hover: ['Ready to break some stone.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="14" y="8" width="4" height="21" fill="#8D5524"/><rect x="16" y="6" width="3" height="4" fill="#A66A32"/>
+      <rect x="6" y="5" width="18" height="3" fill="#607D8B"/><rect x="8" y="8" width="4" height="3" fill="#90A4AE"/>
+      <rect x="21" y="8" width="4" height="3" fill="#455A64"/>
+      ${state === 'click' ? '<rect x="23" y="20" width="5" height="5" fill="#90A4AE"/><rect x="25" y="18" width="2" height="2" fill="#B0BEC5"/>' : ''}
+    </svg>`
+  },
+
+  fishingRod: {
+    id: 'fishingRod', category: 'Stardew Valley', name: 'Fishing Rod',
+    desc: 'Cast a line and wait patiently for a bite.', color: '#6D4C41', bgTheme: '#eaf6f8',
+    dialogues: { idle: ['The water is calm.', 'Maybe there is a bite...'], click: ['Cast! Waiting for a nibble... 🎣'], drag: ['Easy does it, don’t lose the line!'], hover: ['A quiet spot for fishing.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      <rect x="6" y="25" width="4" height="3" fill="#6D4C41"/><rect x="8" y="18" width="3" height="10" fill="#8D5524"/>
+      <path d="M10 19 L15 7 L25 4" stroke="#5D4037" stroke-width="2" fill="none"/>
+      <rect x="24" y="3" width="2" height="2" fill="#90A4AE"/><rect x="25" y="5" width="1" height="9" fill="#90A4AE"/>
+      ${state === 'click' ? '<rect x="23" y="14" width="4" height="2" fill="#4FC3F7"/><rect x="25" y="16" width="2" height="4" fill="#4FC3F7"/><rect x="22" y="20" width="7" height="2" fill="#4FC3F7"/>' : ''}
+    </svg>`
+  },
+
+  chest: {
+    id: 'chest', category: 'Stardew Valley', name: 'Chest',
+    desc: 'A wooden storage chest for keeping farm supplies safe.', color: '#A66A32', bgTheme: '#fff1df',
+    dialogues: { idle: ['Everything has its place.', 'A well-organized farm is a happy farm.'], click: ['Chest opened! What should we store? 📦'], drag: ['Careful, it is full!'], hover: ['A sturdy place for your treasures.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges">
+      ${state === 'click' ? '<rect x="6" y="7" width="20" height="7" fill="#B97838"/><rect x="8" y="5" width="16" height="3" fill="#8D5524"/>' : '<rect x="6" y="10" width="20" height="8" fill="#B97838"/>'}
+      <rect x="5" y="16" width="22" height="11" fill="#8D5524"/><rect x="8" y="18" width="16" height="6" fill="#B97838"/>
+      <rect x="15" y="16" width="3" height="4" fill="#F2C94C"/><rect x="7" y="25" width="18" height="3" fill="#5D4037"/>
+    </svg>`
+  },
+
+  mushroomTree: {
+    id: 'mushroomTree', category: 'Stardew Valley', name: 'Mushroom Tree',
+    desc: 'A rare tree that grows and produces common, red, or purple mushrooms.', color: '#8D5524', bgTheme: '#f4eadf',
+    dialogues: { idle: ['A rare forest tree.', 'Mushrooms are growing underneath.'], click: ['A mushroom dropped! 🍄', 'The tree is full of forest secrets.'], drag: ['Roots and all!'], hover: ['A quiet tree from the Secret Woods.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="13" y="15" width="6" height="14" fill="#8D5524"/><rect x="11" y="24" width="10" height="5" fill="#6D4528"/><rect x="7" y="9" width="18" height="9" fill="#A83C35"/><rect x="4" y="12" width="24" height="7" fill="#A83C35"/><rect x="10" y="6" width="12" height="5" fill="#C94B3D"/><rect x="8" y="10" width="3" height="3" fill="#F5D6A0"/><rect x="18" y="8" width="3" height="3" fill="#F5D6A0"/><rect x="22" y="13" width="3" height="3" fill="#F5D6A0"/>${state === 'click' ? '<rect x="5" y="22" width="5" height="5" fill="#9C27B0"/>' : ''}</svg>`
+  },
+
+  fish: {
+    id: 'fish', category: 'Stardew Valley', name: 'Fish',
+    desc: 'A lively catch from the rivers, lakes, and ocean of the valley.', color: '#4FA3C1', bgTheme: '#e8f7fa',
+    dialogues: { idle: ['The water is peaceful.', 'Maybe there is a bite nearby.'], click: ['Splash! A fish jumps! 🐟', 'The tide brings something new!'], drag: ['Slippery!'], hover: ['Blub blub...'] },
+    variant: 0,
+    svg: (state = 'idle') => {
+      const variant = window.SumikkoCharacters.fish.variant || 0;
+      if (variant === 3) return `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="15" y="10" width="3" height="19" fill="#4C783E"/><rect x="8" y="15" width="8" height="3" fill="#66A94E"/><rect x="17" y="12" width="8" height="3" fill="#74B957"/><rect x="6" y="10" width="5" height="3" fill="#4C9A50"/><rect x="21" y="7" width="5" height="3" fill="#4C9A50"/><rect x="5" y="21" width="6" height="3" fill="#81C784"/></svg>`;
+      if (variant === 4) return `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="10" y="10" width="13" height="14" fill="#D98B8B"/><rect x="7" y="13" width="4" height="9" fill="#C66E78"/><rect x="22" y="13" width="4" height="9" fill="#C66E78"/><rect x="13" y="8" width="3" height="3" fill="#E7A0A0"/><rect x="18" y="8" width="3" height="3" fill="#E7A0A0"/><rect x="12" y="14" width="2" height="2" fill="#263238"/><rect x="20" y="14" width="2" height="2" fill="#263238"/><rect x="8" y="23" width="3" height="5" fill="#C66E78"/><rect x="21" y="23" width="3" height="5" fill="#C66E78"/></svg>`;
+      const color = ['#4FA3C1', '#D98B4A', '#8E76B8'][variant];
+      return `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="9" y="11" width="14" height="12" fill="#263238"/><rect x="7" y="14" width="18" height="7" fill="#263238"/><rect x="10" y="12" width="13" height="10" fill="${color}"/><rect x="8" y="15" width="17" height="5" fill="${color}"/><path d="M25 12l6 5-6 5z" fill="#263238"/><path d="M25 14l4 3-4 3z" fill="${color}"/><path d="M8 15l-5-4v10l5-4z" fill="${color}"/><rect x="13" y="10" width="5" height="3" fill="${color}"/><rect x="14" y="15" width="2" height="2" fill="#263238"/><rect x="19" y="17" width="3" height="2" fill="#B3E5FC"/>${state === 'click' ? '<rect x="4" y="8" width="2" height="3" fill="#4FC3F7"/><rect x="27" y="8" width="2" height="3" fill="#4FC3F7"/>' : ''}</svg>`;
+    }
+  },
+
+  luckyPurpleShorts: {
+    id: 'luckyPurpleShorts', category: 'Stardew Valley', name: 'Lucky Purple Shorts',
+    desc: 'Mayor Lewis’s lucky purple shorts, mysteriously left behind.', color: '#7E57C2', bgTheme: '#f2eafa',
+    dialogues: { idle: ['Someone is looking for these...', 'They are definitely lucky.'], click: ['A scandalous discovery! 💜'], drag: ['Don’t wave those around!'], hover: ['Mayor Lewis would like these back.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="8" y="8" width="16" height="8" fill="#7E57C2"/><rect x="7" y="14" width="8" height="10" fill="#6A43A5"/><rect x="17" y="14" width="8" height="10" fill="#6A43A5"/><rect x="8" y="7" width="16" height="3" fill="#9575CD"/><rect x="14" y="15" width="4" height="3" fill="#B39DDB"/>${state === 'click' ? '<rect x="5" y="5" width="3" height="3" fill="#CE93D8"/><rect x="25" y="5" width="3" height="3" fill="#CE93D8"/>' : ''}</svg>`
+  },
+
+  strawberry: {
+    id: 'strawberry', category: 'Stardew Valley', name: 'Strawberry',
+    desc: 'A sweet spring crop that keeps producing after its first harvest.', color: '#E85D5A', bgTheme: '#fff0ed',
+    dialogues: { idle: ['Sweet and freshly picked.', 'A strawberry patch is a happy place.'], click: ['Juicy! A perfect strawberry. 🍓'], drag: ['Don’t bruise the berries!'], hover: ['Bright red and ready to harvest.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="10" y="8" width="12" height="4" fill="#4CAF50"/><rect x="7" y="11" width="18" height="4" fill="#E85D5A"/><rect x="9" y="15" width="14" height="8" fill="#E85D5A"/><rect x="12" y="23" width="8" height="4" fill="#C94448"/><rect x="11" y="13" width="2" height="2" fill="#FFE082"/><rect x="18" y="15" width="2" height="2" fill="#FFE082"/><rect x="14" y="19" width="2" height="2" fill="#FFE082"/>${state === 'click' ? '<rect x="6" y="8" width="3" height="3" fill="#81C784"/>' : ''}</svg>`
+  },
+
+  fiddleheadFern: {
+    id: 'fiddleheadFern', category: 'Stardew Valley', name: 'Fiddlehead Fern',
+    desc: 'A Secret Woods forage with a distinctive curled frond.', color: '#4C9A50', bgTheme: '#edf7e9',
+    dialogues: { idle: ['A rare fern from the woods.', 'The fiddlehead is tightly curled.'], click: ['Fresh forage from the Secret Woods! 🌿'], drag: ['Careful with the delicate frond.'], hover: ['A little green treasure.'] },
+    svg: (state = 'idle') => `<svg viewBox="0 0 32 32" width="100%" height="100%" shape-rendering="crispEdges"><rect x="14" y="10" width="3" height="19" fill="#4C783E"/><rect x="10" y="19" width="5" height="3" fill="#66A94E"/><rect x="17" y="15" width="5" height="3" fill="#66A94E"/><rect x="8" y="13" width="6" height="3" fill="#74B957"/><rect x="18" y="9" width="5" height="3" fill="#74B957"/><rect x="21" y="6" width="4" height="4" fill="#4C9A50"/><rect x="23" y="4" width="4" height="3" fill="#4C9A50"/>${state === 'click' ? '<rect x="9" y="7" width="3" height="3" fill="#A5D66A"/>' : ''}</svg>`
   }
 };

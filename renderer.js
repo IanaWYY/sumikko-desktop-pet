@@ -54,6 +54,11 @@ class SumikkoPet {
     this.startIdleTimer();
     this.setupMouseEventsForwarding();
     this.updateClickCountLabel();
+    this.junimoVariantTimer = setInterval(() => {
+      if (this.currentCharacterKey !== 'junimo') return;
+      window.SumikkoCharacters.junimo.variant = Math.floor(Math.random() * 4);
+      this.renderCharacter();
+    }, 7000);
   }
 
   setupCanvas() {
@@ -86,6 +91,7 @@ class SumikkoPet {
     const hoverMotion = this.getHoverMotionClass();
     this.container.className = `character-container ${actionState} ${sizeClass} ${hoverMotion}`;
     this.svgWrapper.innerHTML = charDef.svg(actionState);
+    this.svgWrapper.style.transform = this.currentCharacterKey === 'junimo' ? 'scale(0.72)' : 'scale(1)';
   }
 
   getHoverMotionClass() {
@@ -94,7 +100,8 @@ class SumikkoPet {
       neko: 'hover-expression', tokage: 'hover-hop', ebifurai: 'hover-hop',
       tapioca: 'hover-roll', nisetsumuri: 'hover-roll', zassou: 'hover-hop',
       hokori: 'hover-expression', obake: 'hover-roll', yama: 'hover-hop',
-      chicken: 'hover-hop', junimo: 'hover-expression'
+      junimo: 'hover-expression', hoe: 'hover-roll', axe: 'hover-hop', wateringCan: 'hover-expression',
+      scythe: 'hover-roll', pickaxe: 'hover-hop', fishingRod: 'hover-expression', chest: 'hover-hop', mushroomTree: 'hover-hop', fish: 'hover-expression', luckyPurpleShorts: 'hover-roll', strawberry: 'hover-hop', fiddleheadFern: 'hover-expression'
     };
     return motionMap[this.currentCharacterKey] || 'hover-hop';
   }
@@ -308,6 +315,10 @@ class SumikkoPet {
     const startHover = () => {
       if (!this.isDragging) {
         this.container.classList.add('hover', 'hover-active');
+        const charDef = window.SumikkoCharacters[this.currentCharacterKey];
+        if (charDef.dialogues.hover && Math.random() > 0.35) {
+          this.showDialogue(charDef.dialogues.hover[0], 1800);
+        }
       }
     };
 
@@ -382,6 +393,14 @@ class SumikkoPet {
     localStorage.setItem('sumikko-click-counts', JSON.stringify(this.clickCounts));
     this.updateClickCountLabel();
     this.state = 'click';
+    if (this.currentCharacterKey === 'junimo') {
+      const junimo = window.SumikkoCharacters.junimo;
+      junimo.variant = (junimo.variant + 1) % 4;
+    }
+    if (this.currentCharacterKey === 'fish') {
+      const fish = window.SumikkoCharacters.fish;
+      fish.variant = (fish.variant + 1) % 5;
+    }
     this.renderCharacter('click');
 
     const charDef = window.SumikkoCharacters[this.currentCharacterKey];
@@ -467,6 +486,9 @@ class SumikkoPet {
   switchCharacter(key) {
     if (!window.SumikkoCharacters[key]) return;
     this.currentCharacterKey = key;
+    if (key === 'junimo') {
+      window.SumikkoCharacters.junimo.variant = Math.floor(Math.random() * 4);
+    }
     this.renderCharacter('idle');
     this.populateModalGrid();
     this.updateClickCountLabel();
