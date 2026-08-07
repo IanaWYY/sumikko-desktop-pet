@@ -1,46 +1,49 @@
-# 🐱‍❄️ Pixel Desktop Pet
+# Pixel Desktop Pet
 
-An authentic **Pixel-Art Desktop Pet** application built with Electron. Includes 12 San-X official Sumikko characters plus Chicken and Junimo from Stardew Valley, with retro GBA pixel-art aesthetics, transparent overlay window, categorized character switching, interactive mouse animations, custom retro sound effects, hide/show shortcuts, and one-click exit & remove capabilities.
+An Electron desktop pet with crisp pixel-art characters, transparent overlay windows, mouse interactions, character categories, and silent visual feedback.
 
----
+## Character Collections
 
-## 🌟 Character Collections (Crisp 1:1 Pixel Art)
+### Sumikko Gurashi
 
-The character selector groups pets into **Sumikko Gurashi** and **Stardew Valley** collections. Stardew Valley currently includes **Chicken** and **Junimo**.
+The original collection includes Shirokuma, Penguin?, Tonkatsu, Neko, Tokage, Ebifurai, Tapioca, Nisetsumuri, Zassou, Hokori, Obake, and Yama.
 
-| Icon | Character Name | Official Background | Pixel Interactive Actions |
-| :---: | :--- | :--- | :--- |
-| 🐻 | **Shirokuma (Polar Bear)** | Shy bear who hates the cold. Loves hot tea & furoshiki cloth. | **Click**: Sips hot tea with steam particles; **Drag**: Clings to furoshiki sack shivering. |
-| 🐧 | **Penguin?** | Unsure if he is a real penguin (might be a Kappa). Loves cucumbers. | **Click**: Eats crunchy cucumber stick with crumbs; **Drag**: Floating question mark overhead. |
-| 🥩 | **Tonkatsu (Pork Cutlet)** | 99% fat & 1% meat edge. Dreams of being eaten! | **Click**: Tops himself with yellow mustard & sparkles; **Drag**: Shakes off oil droplets. |
-| 🐱 | **Neko (Cat)** | Shy cat self-conscious about her shape. Loves wall scratching. | **Click**: Scratches wall "Scratch scratch!", or eats fish snack; **Drag**: Curls into a ball. |
-| 🦕 | **Tokage (Dino)** | Secretly a surviving dinosaur pretending to be a lizard. Loves fish. | **Click**: Swings & swims with water splashes & little red fish; **Drag**: Paddles fast. |
-| 🍤 | **Ebifurai (Shrimp)** | Leftover fried shrimp tail. Best friends with Tonkatsu! | **Click**: High jump pose! Wiggles red tail; **Drag**: Tail shakes fast. |
-| 🧋 | **Tapioca (Boba)** | Leftover boba pearls from milk tea. Cute multi-colored balls. | **Click**: Triple bounce & stacks up 1-2-3; **Drag**: Bounces like rubber balls. |
-| 🐌 | **Nisetsumuri (Snail)** | Actually a slug carrying a shell to pretend to be a snail. | **Click**: Shell slips off "Oops!", quickly puts it back; **Drag**: Holds shell tight. |
-| 🌿 | **Zassou (Grass)** | Positive weed grass. Dreams of joining a bouquet! | **Click**: Sways happily and blooms a pink flower on head; **Drag**: Sways in breeze. |
-| 🌫️ | **Hokori (Dust)** | Tiny fluff dust accumulating happily in corners. | **Click**: Scatters into 3 mini dust puffballs & reunites; **Drag**: Floats around. |
-| 👻 | **Obake (Ghost)** | Friendly attic ghost who loves cleaning with a broom. | **Click**: Sweeps screen shiny clean with broom; **Drag**: Becomes semi-transparent. |
-| 🗻 | **Yama (Mt. Fuji)** | A small mountain admiring Mt. Fuji. Loves hot springs. | **Click**: Face turns red with hot spring steam; **Drag**: Steadfast like a mountain. |
+### Stardew Valley
 
----
+The Stardew Valley collection includes:
 
-## ⚡ Features & Controls
+- Junimo, with four rotating colors and retained dialogue bubbles.
+- Fishing Rod, which casts on click and cycles through fish, seaweed, Joja Cola, Soggy Newspaper, and other catches.
+- Hoe, Axe, Watering Can, Scythe, and Pickaxe, each with a matching farm action.
+- Mushroom Tree, Strawberry, Leek, Dandelion, Daffodil, Sweet Pea, Crocus, and Fiddlehead Fern.
+- Lucky Purple Shorts.
+- Chest, which opens on click.
 
-1. **Compact Size**: Scaled to `68px x 68px` pet body (`105px x 105px` window) so it won't block desktop work.
-2. **All English UI**: Dialogues, menus, settings, and thought bubbles are in English.
-3. **1:1 Official Pixel-Art Style**: Retro crisp GBA/Switch game pixel graphics for all 12 characters.
-4. **Hide / Show Anytime**: Global shortcut `Cmd+Shift+P` (or `Ctrl+Shift+P`) to show/hide pet instantly.
-5. **Right-Click Context Menu**: Switch between all 12 characters, trigger actions, stick to corner, hide, or delete/quit.
-6. **Delete / Quit Pet**: Click `Delete / Quit Pet` in the context menu to close and remove the pet instance completely.
+Stardew Valley characters other than Junimo and Fishing Rod use visual interactions without dialogue bubbles. All audio has been removed; the app is fully silent.
 
----
+## Features
 
-## 🚀 How to Run
+- Pixel-art SVG character rendering with idle, hover, click, and drag states.
+- Character selector grouped by collection.
+- Three display sizes: Tiny (1/4th), Normal, and Mini (1/8th).
+- Transparent always-on-top desktop overlay.
+- Right-click menu for character switching, size, opacity, hiding, and quitting.
+- Visual particles and dialogue bubbles where enabled; no sound effects.
+- Global hide/show shortcut: `Cmd+Shift+P` or `Ctrl+Shift+P`.
 
-Requires Node.js `22.12.0` or newer. Electron is pinned to `43.2.0` so a fresh install downloads the current compatible runtime instead of the older v31 binary.
+## Run
+
+Requires Node.js 22.12.0 or newer.
 
 ```bash
 npm install
 npm start
 ```
+
+## Project
+
+- Package name: `pixel-desktop-pet`
+- Main process: `main.js`
+- Renderer logic: `renderer.js`
+- Character definitions: `assets/characters.js`
+- GitHub repository: `IanaWYY/sumikko-desktop-pet`
