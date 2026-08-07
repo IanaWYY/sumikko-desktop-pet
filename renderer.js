@@ -6,8 +6,7 @@ class SumikkoPet {
   constructor() {
     this.currentCharacterKey = 'shirokuma';
     this.state = 'idle'; // idle | hover | click | drag
-    this.soundEnabled = true;
-    this.isTinySize = true; // true = 1/4th (68px), false = Normal (96px)
+    this.sizeMode = 0; // 0 = Tiny (1/4th), 1 = Normal, 2 = Mini (1/8th)
     this.opacity = Number(localStorage.getItem('sumikko-opacity') || 1);
     this.clickCounts = JSON.parse(localStorage.getItem('sumikko-click-counts') || '{}');
     this.opacityEditing = false;
@@ -38,7 +37,6 @@ class SumikkoPet {
     this.particles = [];
     
     // Audio Context
-    this.audioCtx = null;
     this.particleFrameId = null;
     this.particleLoopRunning = false;
 
@@ -87,7 +85,12 @@ class SumikkoPet {
     const charDef = window.SumikkoCharacters[this.currentCharacterKey];
     if (!charDef) return;
 
-    const sizeClass = this.isTinySize ? 'size-tiny' : 'size-normal';
+    if (!this.canShowCharacterDialogue()) {
+      this.hideDialogue();
+    }
+    this.petApp.classList.toggle('dialogue-disabled', !this.canShowCharacterDialogue());
+
+    const sizeClass = ['size-tiny', 'size-normal', 'size-mini'][this.sizeMode];
     const hoverMotion = this.getHoverMotionClass();
     this.container.className = `character-container ${actionState} ${sizeClass} ${hoverMotion}`;
     this.svgWrapper.innerHTML = charDef.svg(actionState);
@@ -101,7 +104,7 @@ class SumikkoPet {
       tapioca: 'hover-roll', nisetsumuri: 'hover-roll', zassou: 'hover-hop',
       hokori: 'hover-expression', obake: 'hover-roll', yama: 'hover-hop',
       junimo: 'hover-expression', hoe: 'hover-roll', axe: 'hover-hop', wateringCan: 'hover-expression',
-      scythe: 'hover-roll', pickaxe: 'hover-hop', fishingRod: 'hover-expression', chest: 'hover-hop', mushroomTree: 'hover-hop', fish: 'hover-expression', luckyPurpleShorts: 'hover-roll', strawberry: 'hover-hop', fiddleheadFern: 'hover-expression'
+      scythe: 'hover-roll', pickaxe: 'hover-hop', fishingRod: 'hover-expression', chest: 'hover-hop', mushroomTree: 'hover-hop', luckyPurpleShorts: 'hover-roll', strawberry: 'hover-hop', fiddleheadFern: 'hover-expression'
     };
     return motionMap[this.currentCharacterKey] || 'hover-hop';
   }
@@ -137,6 +140,10 @@ class SumikkoPet {
   }
 
   showDialogue(text, duration = 3000) {
+    if (!this.canShowCharacterDialogue()) {
+      this.hideDialogue();
+      return;
+    }
     if (!text) return;
     this.bubbleText.innerText = text;
     this.bubble.classList.remove('bubble-hidden');
@@ -147,59 +154,18 @@ class SumikkoPet {
     }, duration);
   }
 
-  // --- Sound Effects Synthesizer ---
-  playSound(type = 'pop') {
-    if (!this.soundEnabled) return;
-    try {
-      if (!this.audioCtx) {
-        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (this.audioCtx.state === 'suspended') {
-        this.audioCtx.resume();
-      }
+  hideDialogue() {
+    if (this.bubbleTimer) {
+      clearTimeout(this.bubbleTimer);
+      this.bubbleTimer = null;
+    }
+    this.bubble.classList.add('bubble-hidden');
+  }
 
-      const now = this.audioCtx.currentTime;
-      const osc = this.audioCtx.createOscillator();
-      const gain = this.audioCtx.createGain();
-
-      osc.connect(gain);
-      gain.connect(this.audioCtx.destination);
-
-      if (type === 'pop') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(350, now);
-        osc.frequency.exponentialRampToValueAtTime(700, now + 0.06);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
-        osc.start(now);
-        osc.stop(now + 0.06);
-      } else if (type === 'crunch') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(500, now);
-        osc.frequency.setValueAtTime(350, now + 0.04);
-        osc.frequency.setValueAtTime(600, now + 0.08);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
-        osc.start(now);
-        osc.stop(now + 0.12);
-      } else if (type === 'drink') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(280, now);
-        osc.frequency.exponentialRampToValueAtTime(140, now + 0.1);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
-        osc.start(now);
-        osc.stop(now + 0.1);
-      } else if (type === 'sparkle') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(800, now);
-        osc.frequency.exponentialRampToValueAtTime(1400, now + 0.15);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
-        osc.start(now);
-        osc.stop(now + 0.15);
-      }
-    } catch (e) {}
+  canShowCharacterDialogue() {
+    const character = window.SumikkoCharacters[this.currentCharacterKey];
+    if (['junimo', 'fishingRod'].includes(this.currentCharacterKey)) return true;
+    return !character || character.category !== 'Stardew Valley';
   }
 
   // --- Particles Engine ---
@@ -272,7 +238,7 @@ class SumikkoPet {
         this.state = 'drag';
         this.renderCharacter('drag');
         const charDef = window.SumikkoCharacters[this.currentCharacterKey];
-        if (charDef.dialogues.drag) {
+        if (this.canShowCharacterDialogue() && charDef.dialogues.drag) {
           this.showDialogue(charDef.dialogues.drag[Math.floor(Math.random() * charDef.dialogues.drag.length)]);
         }
       }, 150);
@@ -316,7 +282,7 @@ class SumikkoPet {
       if (!this.isDragging) {
         this.container.classList.add('hover', 'hover-active');
         const charDef = window.SumikkoCharacters[this.currentCharacterKey];
-        if (charDef.dialogues.hover && Math.random() > 0.35) {
+        if (this.canShowCharacterDialogue() && charDef.dialogues.hover && Math.random() > 0.35) {
           this.showDialogue(charDef.dialogues.hover[0], 1800);
         }
       }
@@ -347,10 +313,11 @@ class SumikkoPet {
     });
 
     document.getElementById('btn-toggle-size').addEventListener('click', () => {
-      this.isTinySize = !this.isTinySize;
-      document.getElementById('text-pet-size').innerText = `Size: ${this.isTinySize ? 'Tiny (1/4th)' : 'Normal'}`;
+      this.sizeMode = (this.sizeMode + 1) % 3;
+      const sizeLabels = ['Tiny (1/4th)', 'Normal', 'Mini (1/8th)'];
+      document.getElementById('text-pet-size').innerText = `Size: ${sizeLabels[this.sizeMode]}`;
       this.renderCharacter();
-      this.showDialogue(`Switched size to ${this.isTinySize ? 'Tiny' : 'Normal'}!`, 3000);
+      this.showDialogue(`Switched size to ${sizeLabels[this.sizeMode]}!`, 3000);
       this.hideContextMenu();
     });
 
@@ -363,13 +330,6 @@ class SumikkoPet {
       localStorage.setItem('sumikko-opacity', String(this.opacity));
       this.applyOpacity();
       this.resetOpacityConfirmTimer();
-    });
-
-    document.getElementById('btn-sound-toggle').addEventListener('click', () => {
-      this.soundEnabled = !this.soundEnabled;
-      document.getElementById('text-sound').innerText = `Sound: ${this.soundEnabled ? 'ON' : 'OFF'}`;
-      document.getElementById('icon-sound').innerText = this.soundEnabled ? '🔊' : '🔇';
-      this.hideContextMenu();
     });
 
     document.getElementById('btn-hide-pet').addEventListener('click', () => {
@@ -401,22 +361,23 @@ class SumikkoPet {
       const fish = window.SumikkoCharacters.fish;
       fish.variant = (fish.variant + 1) % 5;
     }
+    if (this.currentCharacterKey === 'fishingRod') {
+      const fishingRod = window.SumikkoCharacters.fishingRod;
+      fishingRod.catch = (fishingRod.catch + 1) % 5;
+    }
     this.renderCharacter('click');
 
     const charDef = window.SumikkoCharacters[this.currentCharacterKey];
-    if (charDef && charDef.dialogues.click) {
+    if (this.canShowCharacterDialogue() && charDef && charDef.dialogues.click) {
       const dialogue = charDef.dialogues.click[Math.floor(Math.random() * charDef.dialogues.click.length)];
       this.showDialogue(dialogue, 3000);
     }
 
     if (this.currentCharacterKey === 'shirokuma') {
-      this.playSound('drink');
       this.spawnParticles('bubble');
     } else if (this.currentCharacterKey === 'penguin') {
-      this.playSound('crunch');
       this.spawnParticles('stars');
     } else {
-      this.playSound('sparkle');
       this.spawnParticles('stars');
     }
 
@@ -430,7 +391,7 @@ class SumikkoPet {
 
   checkCornerPosition() {
     const charDef = window.SumikkoCharacters[this.currentCharacterKey];
-    if (charDef.dialogues.corner && Math.random() > 0.4) {
+    if (this.canShowCharacterDialogue() && charDef.dialogues.corner && Math.random() > 0.4) {
       this.showDialogue(charDef.dialogues.corner[0], 3000);
     }
   }
@@ -460,6 +421,7 @@ class SumikkoPet {
     const groups = {};
     Object.keys(window.SumikkoCharacters).forEach((key) => {
       const char = window.SumikkoCharacters[key];
+      if (char.hidden) return;
       const category = char.category || 'Sumikko Gurashi';
       if (!groups[category]) groups[category] = [];
       groups[category].push({ key, char });
@@ -494,8 +456,11 @@ class SumikkoPet {
     this.updateClickCountLabel();
     
     const char = window.SumikkoCharacters[key];
-    this.showDialogue(`Hello! I'm ${char.name}~`, 3000);
-    this.playSound('pop');
+    if (this.canShowCharacterDialogue()) {
+      this.showDialogue(`Hello! I'm ${char.name}~`, 3000);
+    } else {
+      this.hideDialogue();
+    }
     this.spawnParticles('stars');
   }
 
@@ -511,7 +476,7 @@ class SumikkoPet {
     setInterval(() => {
       if (this.state === 'idle' && Math.random() < 0.35) {
         const charDef = window.SumikkoCharacters[this.currentCharacterKey];
-        if (charDef && charDef.dialogues.idle) {
+        if (this.canShowCharacterDialogue() && charDef && charDef.dialogues.idle) {
           const dialogue = charDef.dialogues.idle[Math.floor(Math.random() * charDef.dialogues.idle.length)];
           this.showDialogue(dialogue, 3000);
         }

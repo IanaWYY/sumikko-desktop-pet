@@ -104,6 +104,11 @@ body, html {
   height: 96px;
 }
 
+.character-container.size-mini {
+  width: 34px;
+  height: 34px;
+}
+
 .character-container:active {
   cursor: grabbing;
 }
@@ -158,6 +163,7 @@ body, html {
   image-rendering: crisp-edges;
 }
 
+
 /* Dialogue Bubble - Positioned directly above the pet head without covering */
 .bubble {
   position: absolute;
@@ -186,6 +192,12 @@ body, html {
 .bubble.bubble-hidden {
   opacity: 0;
   transform: translateX(-50%) translateY(6px) scale(0.85);
+}
+
+.pet-app.dialogue-disabled .bubble {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .bubble-tail {
