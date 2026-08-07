@@ -4,11 +4,12 @@
 
 class SumikkoPet {
   constructor() {
-    this.currentCharacterKey = 'shirokuma';
+    this.currentCharacterKey = localStorage.getItem('pixel-current-character') || 'shirokuma';
     this.state = 'idle'; // idle | hover | click | drag
-    this.sizeMode = 0; // 0 = Tiny (1/4th), 1 = Normal, 2 = Mini (1/8th)
+    this.sizeMode = Number(localStorage.getItem('pixel-size-mode') || 0);
     this.opacity = Number(localStorage.getItem('sumikko-opacity') || 1);
-    this.clickCounts = JSON.parse(localStorage.getItem('sumikko-click-counts') || '{}');
+    this.clickCounts = {};
+    localStorage.removeItem('sumikko-click-counts');
     this.opacityEditing = false;
     this.opacityConfirmTimer = null;
 
@@ -30,6 +31,7 @@ class SumikkoPet {
     this.opacityEditorValue = document.getElementById('opacity-editor-value');
     this.selectorModal = document.getElementById('selector-modal');
     this.characterGrid = document.getElementById('character-grid');
+    this.emojiPicker = document.getElementById('emoji-picker');
     this.canvas = document.getElementById('particle-canvas');
     this.ctx = this.canvas.getContext('2d');
 
@@ -52,6 +54,7 @@ class SumikkoPet {
     this.startIdleTimer();
     this.setupMouseEventsForwarding();
     this.updateClickCountLabel();
+    this.populateEmojiPicker();
     this.junimoVariantTimer = setInterval(() => {
       if (this.currentCharacterKey !== 'junimo') return;
       window.SumikkoCharacters.junimo.variant = Math.floor(Math.random() * 4);
@@ -277,6 +280,13 @@ class SumikkoPet {
       window.addEventListener('mouseup', onMouseUp);
     });
 
+    this.container.addEventListener('dblclick', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!this.canUseEmoji()) return;
+      this.showEmojiPicker();
+    });
+
     // Hover states
     const startHover = () => {
       if (!this.isDragging) {
@@ -314,6 +324,7 @@ class SumikkoPet {
 
     document.getElementById('btn-toggle-size').addEventListener('click', () => {
       this.sizeMode = (this.sizeMode + 1) % 3;
+      localStorage.setItem('pixel-size-mode', String(this.sizeMode));
       const sizeLabels = ['Tiny (1/4th)', 'Normal', 'Mini (1/8th)'];
       document.getElementById('text-pet-size').innerText = `Size: ${sizeLabels[this.sizeMode]}`;
       this.renderCharacter();
@@ -448,6 +459,8 @@ class SumikkoPet {
   switchCharacter(key) {
     if (!window.SumikkoCharacters[key]) return;
     this.currentCharacterKey = key;
+    if (!this.canUseEmoji()) this.hideEmojiPicker();
+    localStorage.setItem('pixel-current-character', key);
     if (key === 'junimo') {
       window.SumikkoCharacters.junimo.variant = Math.floor(Math.random() * 4);
     }
@@ -462,6 +475,37 @@ class SumikkoPet {
       this.hideDialogue();
     }
     this.spawnParticles('stars');
+  }
+
+  populateEmojiPicker() {
+    const emojis = ['❤️', '✨', '🌟', '💤', '❗', '❓', '🌱', '🍀', '🎉', '💜'];
+    this.emojiPicker.innerHTML = emojis.map((emoji) => `<button class="emoji-choice" type="button" data-emoji="${emoji}">${emoji}</button>`).join('');
+    this.emojiPicker.addEventListener('click', (event) => {
+      const choice = event.target.closest('.emoji-choice');
+      if (!choice) return;
+      this.showEmojiBubble(choice.dataset.emoji);
+      this.hideEmojiPicker();
+    });
+  }
+
+  canUseEmoji() {
+    const character = window.SumikkoCharacters[this.currentCharacterKey];
+    return !character || character.category !== 'Stardew Valley' || this.currentCharacterKey === 'junimo';
+  }
+
+  showEmojiPicker() { this.emojiPicker.classList.remove('emoji-picker-hidden'); }
+  hideEmojiPicker() { this.emojiPicker.classList.add('emoji-picker-hidden'); }
+
+  showEmojiBubble(emoji) {
+    if (this.bubbleTimer) clearTimeout(this.bubbleTimer);
+    this.petApp.classList.add('emoji-active');
+    this.bubbleText.innerText = emoji;
+    this.bubble.classList.remove('bubble-hidden');
+    this.bubbleTimer = setTimeout(() => {
+      this.bubble.classList.add('bubble-hidden');
+      this.petApp.classList.remove('emoji-active');
+      this.bubbleTimer = null;
+    }, 5000);
   }
 
   showModal() {

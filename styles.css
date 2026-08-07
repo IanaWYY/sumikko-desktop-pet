@@ -212,6 +212,12 @@ body, html {
   border-top: 6px solid #5A524C;
 }
 
+.emoji-picker { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); display: flex; gap: 4px; padding: 6px; background: rgba(255,255,255,.98); border: 2px solid #796E65; border-radius: 12px; box-shadow: 0 4px 12px rgba(90,75,65,.25); z-index: 120; }
+.emoji-picker-hidden { display: none; }
+.emoji-choice { border: 0; background: transparent; padding: 3px; font-size: 19px; cursor: pointer; border-radius: 6px; }
+.emoji-choice:hover { background: #f2eee9; transform: scale(1.15); }
+.pet-app.dialogue-disabled.emoji-active .bubble { opacity: 1 !important; visibility: visible !important; }
+
 /* Particle Canvas Layer */
 #particle-canvas {
   position: absolute;

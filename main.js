@@ -1,8 +1,27 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut, screen } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 let mainWindow = null;
 let tray = null;
+const positionFile = path.join(app.getPath('userData'), 'pixel-desktop-pet-position.json');
+
+function readSavedPosition() {
+  try {
+    const position = JSON.parse(fs.readFileSync(positionFile, 'utf8'));
+    if (Number.isInteger(position.x) && Number.isInteger(position.y)) return position;
+  } catch (e) {}
+  return null;
+}
+
+function savePosition() {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  try {
+    fs.mkdirSync(path.dirname(positionFile), { recursive: true });
+    const [x, y] = mainWindow.getPosition();
+    fs.writeFileSync(positionFile, JSON.stringify({ x, y }));
+  } catch (e) {}
+}
 
 function enforceAlwaysOnTop() {
   if (!mainWindow || mainWindow.isDestroyed()) return;
@@ -14,11 +33,12 @@ function createWindow() {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width, height } = primaryDisplay.workAreaSize;
 
+  const savedPosition = readSavedPosition();
   mainWindow = new BrowserWindow({
     width: 280,
     height: 280,
-    x: width - 300,
-    y: height - 300,
+    x: savedPosition ? savedPosition.x : width - 300,
+    y: savedPosition ? savedPosition.y : height - 300,
     frame: false,
     transparent: true,
     alwaysOnTop: true,
@@ -44,6 +64,7 @@ function createWindow() {
   mainWindow.on('blur', enforceAlwaysOnTop);
 
   mainWindow.on('closed', () => {
+    savePosition();
     mainWindow = null;
   });
 }
@@ -95,6 +116,7 @@ function resetPosition() {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width, height } = primaryDisplay.workAreaSize;
   mainWindow.setPosition(width - 300, height - 300);
+  savePosition();
   mainWindow.show();
   enforceAlwaysOnTop();
 }
@@ -124,6 +146,7 @@ ipcMain.on('window-move', (event, { mouseX, mouseY }) => {
   if (!mainWindow) return;
   const [winX, winY] = mainWindow.getPosition();
   mainWindow.setPosition(winX + mouseX, winY + mouseY);
+  savePosition();
 });
 
 ipcMain.on('set-ignore-mouse-events', (event, ignore, options) => {
